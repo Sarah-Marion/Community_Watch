@@ -17,7 +17,13 @@ class Hood(models.Model):
         return self.hoodName
 
     def save_hood(self):
+        """
+        Method that creates a new hood object
+        """
         self.save()
 
     def delete_hood(self):
+        """
+        Method that deletes a hood object
+        """
         self.delete()
