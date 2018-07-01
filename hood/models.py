@@ -89,3 +89,34 @@ class Business(models.Model):
         """
         self.delete()
 
+
+class Post(models.Model):
+    """
+    Post class that defines objects of each news
+    """
+    title = models.CharField(max_length=100)
+    description = models.CharField(max_length=2000)
+    hood = models.ForeignKey(Hood, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    pub_date = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.title
+            
+    class Meta:
+        """
+        Ordering of posts with the most recent showing from the top most
+        """
+        ordering = ['-pub_date']
+    
+    def save_post(self):
+        """
+        method that creates posts
+        """
+        self.save()
+
+    def delete_post(self):
+        """
+        methods that deletes an instance of post
+        """
+        self.delete()
