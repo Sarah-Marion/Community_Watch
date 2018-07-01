@@ -26,8 +26,24 @@ class SignUpForm(UserCreationForm):
 
 class LoginForm(AuthenticationForm):
     """
-    classs that creates a Login form
+    class that creates a Login form
     """
     username = forms.CharField(widget=TextInput(attrs={'class':'validate', 'placeholder':'Username'}))
     password = forms.CharField(widget=PasswordInput(attrs={'placeholder':'Password'}))
 
+class NewPostForm(forms.ModelForm):
+    """
+    class that creates a post form
+    """
+    class Meta:
+        model = Post
+        exclude = ['hood', 'user']
+        
+
+class EditProfile(forms.ModelForm):
+    """
+    class that lets a user edit their profile
+    """
+    class Meta:
+        model = Profile
+        exclude = ['user', 'email_confirmed']
