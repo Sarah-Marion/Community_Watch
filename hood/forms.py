@@ -1,5 +1,5 @@
 from django import forms
-# from .models import Hood, Location, Business, News
+from .models import Hood, Profile, Business, Post, Social_Amenities
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.forms.widgets import TextInput, PasswordInput
@@ -47,3 +47,27 @@ class EditProfile(forms.ModelForm):
     class Meta:
         model = Profile
         exclude = ['user', 'email_confirmed']
+
+class NewBusinessForm(forms.ModelForm):
+    """
+    class that let's a user fill in business information
+    """
+    class Meta:
+        model = Business
+        exclude = ['hood', 'user']
+
+class NewHoodForm(forms.ModelForm):
+    """
+    class that let's a user fill in their neighbourhood details
+    """
+    class Meta:
+        model = Hood
+        fields = ('hoodName', 'hoodLocation', 'occupantsCount', 'admin')
+        
+class NewSocialForm(forms.ModelForm):
+    """
+    class that lets a user post information on social amenities
+    """
+    class Meta:
+        model = Social_Amenities
+        exclude = ['hood']
