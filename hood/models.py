@@ -57,3 +57,35 @@ def save_user_profile(sender, instance, **kwargs):
     """
     instance.profile.save()
 
+
+class Business(models.Model):
+    """
+    Business class that defines objects of each business
+    """
+    business_name = models.CharField(max_length=100, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    business_description = models.TextField(null=True)
+    location = models.CharField(max_length=1000, null=True)
+    email = models.EmailField(max_length=254)
+    hood = models.ForeignKey(Hood, null=True)
+
+    @classmethod
+    def search_by_business_name(cls, search_term):
+        business = cls.objects.filter(business_name__icontains=search_term)
+        return business
+    
+    def __str__(self):
+        return self.business_name
+
+    def save_business(self):
+        """
+        method that creates business
+        """
+        self.save()
+
+    def delete_business(self):
+        """
+        Delete method to delete an instance of class Business
+        """
+        self.delete()
+
