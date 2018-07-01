@@ -50,7 +50,7 @@ class EditProfile(forms.ModelForm):
 
 class NewBusinessForm(forms.ModelForm):
     """
-    class that let's a user fill in business information
+    class that lets a user fill in business information
     """
     class Meta:
         model = Business
@@ -58,7 +58,7 @@ class NewBusinessForm(forms.ModelForm):
 
 class NewHoodForm(forms.ModelForm):
     """
-    class that let's a user fill in their neighbourhood details
+    class that lets a user fill in their neighbourhood details
     """
     class Meta:
         model = Hood
