@@ -27,3 +27,33 @@ class Hood(models.Model):
         Method that deletes a hood object
         """
         self.delete()
+
+
+class Profile(models.Model):
+    """
+    Profile class that defines objects of each profile
+    """
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    email_confirmed = models.BooleanField(default=False)
+    idNumber = models.CharField(max_length=8, null=True, unique=True)
+    name = models.CharField(max_length=500, blank=True)
+    avatar = models.ImageField(upload_to='profilepic/')
+    generalLocation = models.TextField(max_length=500, blank=True)
+    email = models.EmailField(max_length=254)
+    hood = models.ForeignKey(Hood, null=True, blank=True)
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    """
+    method that lets a user create a profile
+    """
+    if created:
+        Profile.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    """
+    method that saves a user's profile
+    """
+    instance.profile.save()
+
