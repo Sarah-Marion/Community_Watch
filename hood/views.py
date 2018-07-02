@@ -91,4 +91,20 @@ def index(request):
     post = Post.objects.all()
     public = Social_Amenities.objects.all()
     return render(request, 'all/index.html', {"post": post, "public": public})
+    
 
+@login_required(login_url='/accounts/login/')
+def search_results(request):
+    """
+    View function that enables a user to search for listed business
+    """
+    if 'business' in request.GET and request.GET["business"]:
+        search_term = request.GET.get("business")
+        searched_businesses = Business.search_by_business_name(search_term)
+        message = f"{search_term}"
+
+        return render(request, 'all/search.html', {"message": message, "searched_businesses": searched_businesses})
+
+    else:
+        message = "You haven't searched for any term"
+        return render(request, 'all/search.html', {"message": message})
