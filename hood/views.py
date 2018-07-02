@@ -202,3 +202,20 @@ def social_amenities(request):
     return render(request, 'all/social_amenities.html', {"form": form})
 
 
+@login_required(login_url='/accounts/login/')
+def neighbourhood(request):
+    """
+    View function that lets a user create a new neighbourhood
+    """
+    current_user = request.user
+    if request.method == 'POST':
+        form = NewHoodForm(request.POST)
+        if form.is_valid():
+            hood = form.save(commit=False)
+            hood.user = current_user
+            hood.save()
+            return redirect('homepage')
+    else:
+        form = NewHoodForm()
+    return render(request, 'all/hood.html', {"form": form})
+
