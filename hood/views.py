@@ -219,3 +219,38 @@ def neighbourhood(request):
         form = NewHoodForm()
     return render(request, 'all/hood.html', {"form": form})
 
+
+@login_required(login_url='/accounts/login/')
+def bizdisplay(request):
+    """
+    View function that displays all listed businesses
+    """
+    biz = Business.objects.all()
+    return render(request, 'all/bizdisplay.html', {"biz": biz})
+
+
+@login_required(login_url='/accounts/login/')
+def hooddisplay(request):
+    """
+    View function that displays all listed neighbourhoods
+    """
+    hoods = Hood.objects.all()
+    return render(request, 'all/displayhood.html', {"hoods": hoods})
+
+
+def join(request, hoodId):
+    """
+    View function that lets new users join a specified neighbourhood 
+    """
+    neighbourhood = Hood.objects.get(pk=hoodId)
+    if Join.objects.filter(user_id=request.user).exists():
+        messages.success(
+            request, 'Welcome. You are now a member of this Neighbourhood')
+        Join.objects.filter(user_id=request.user).update(hood_id=neighbourhood)
+        return redirect('displayhood')
+    else:
+        messages.success(
+            request, 'Welcome. You are now a member of this Neighbourhood')
+        Join(user_id=request.user, hood_id=neighbourhood).save()
+        return redirect('displayhood')
+
