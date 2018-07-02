@@ -21,7 +21,7 @@ from hood.forms import LoginForm, SignUpForm
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    # url(r'', include('hood.urls')),
+    url(r'', include('hood.urls')),
     url(r'^login/$', views.login, {'template_name': 'registration/login.html',
                                    "authentication_form": LoginForm}, name='login'),
     url(r'^account_activation_sent/$', app_views.account_activation_sent, name='account_activation_sent'),
