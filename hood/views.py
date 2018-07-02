@@ -145,3 +145,23 @@ def profile(request, profile_id):
         "all_profile": all_profile
     }
     return render(request, "all/profile.html", content)
+
+
+@login_required(login_url='/accounts/login/')
+def edit(request):
+    """
+    View function that lets a user edit their profile
+    """
+    profile = request.user.profile
+    if request.method == 'POST':
+        form = EditProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            current_user = request.user
+            profile = form.save(commit=False)
+            profile.user = request.user
+            profile.save()
+            return redirect('profile', current_user.id)
+    else:
+        form = EditProfileForm()
+    return render(request, 'all/editprofile.html', {"form": form})
+
