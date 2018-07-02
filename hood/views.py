@@ -91,7 +91,7 @@ def index(request):
     post = Post.objects.all()
     public = Social_Amenities.objects.all()
     return render(request, 'all/index.html', {"post": post, "public": public})
-    
+
 
 @login_required(login_url='/accounts/login/')
 def search_results(request):
@@ -108,3 +108,22 @@ def search_results(request):
     else:
         message = "You haven't searched for any term"
         return render(request, 'all/search.html', {"message": message})
+
+
+
+@login_required(login_url='/accounts/login/')
+def new_post(request):
+    """
+    View function that lets a user post up on the notice board
+    """
+    current_user = request.user
+    if request.method == 'POST':
+        form = NewPostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user = current_user
+            post.save()
+            return redirect('homepage')
+    else:
+        form = NewPostForm()
+    return render(request, 'all/post.html', {"form": form})
