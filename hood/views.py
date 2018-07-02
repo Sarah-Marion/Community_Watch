@@ -184,3 +184,21 @@ def business(request):
     return render(request, 'all/business.html', {"form": form})
 
 
+@login_required(login_url='/accounts/login/')
+def social_amenities(request):
+    """
+    View function that lets a user create a social place or activity of an area
+    """
+    current_user = request.user
+    if request.method == 'POST':
+        form = NewSocialForm(request.POST)
+        if form.is_valid():
+            social = form.save(commit=False)
+            social.user = current_user
+            social.save()
+            return redirect('homepage')
+    else:
+        form = NewSocialForm()
+    return render(request, 'all/social_amenities.html', {"form": form})
+
+
