@@ -92,7 +92,7 @@ class Business(models.Model):
 
 class Post(models.Model):
     """
-    Post class that defines objects of each news
+    Post class that defines objects of each post
     """
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=2000)
@@ -120,3 +120,24 @@ class Post(models.Model):
         methods that deletes an instance of post
         """
         self.delete()
+
+class Join(models.Model):
+	"""
+	Model that keeps track of users and the neighbourhoods they're in
+	"""
+	user_id = models.ForeignKey(User)
+	hood_id = models.ForeignKey(Hood)
+
+	def __str__(self):
+		return self.user_id
+
+class Social_Amenities(models.Model):
+    ammenityName = models.CharField(max_length=100)
+    location = models.CharField(max_length=100)
+    description = models.CharField(max_length=100)
+    address = models.CharField(max_length=100)
+    hood = models.ForeignKey(Hood, null=True)
+    
+    def __str__(self):
+        return self.ammenityName
+
