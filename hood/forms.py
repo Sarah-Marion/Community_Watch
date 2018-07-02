@@ -40,7 +40,7 @@ class NewPostForm(forms.ModelForm):
         exclude = ['hood', 'user']
         
 
-class EditProfile(forms.ModelForm):
+class EditProfileForm(forms.ModelForm):
     """
     class that lets a user edit their profile
     """
