@@ -165,3 +165,22 @@ def edit(request):
         form = EditProfileForm()
     return render(request, 'all/editprofile.html', {"form": form})
 
+
+@login_required(login_url='/accounts/login/')
+def business(request):
+    """
+    View function that lets a user create a business
+    """
+    current_user = request.user
+    if request.method == 'POST':
+        form = NewBusinessForm(request.POST)
+        if form.is_valid():
+            business = form.save(commit=False)
+            business.user = current_user
+            business.save()
+            return redirect('homepage')
+    else:
+        form = NewBusinessForm()
+    return render(request, 'all/business.html', {"form": form})
+
+
