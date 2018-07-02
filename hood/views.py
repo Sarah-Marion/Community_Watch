@@ -82,3 +82,13 @@ def activate(request, uidb64, token):
     else:
         return render(request, 'registration/account_activation_invalid.html')
 
+
+@login_required(login_url='/accounts/login/')
+def index(request):
+    """
+    View function that displays the home page and its contents
+    """
+    post = Post.objects.all()
+    public = Social_Amenities.objects.all()
+    return render(request, 'all/index.html', {"post": post, "public": public})
+
