@@ -1,4 +1,4 @@
-astroid==2.6.6
+astroid==2.11.6
 dj-database-url==0.5.0
 Django==1.11
 django-bootstrap3==15.0.0
